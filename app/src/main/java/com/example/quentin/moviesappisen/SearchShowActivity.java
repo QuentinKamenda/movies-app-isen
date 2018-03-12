@@ -1,7 +1,6 @@
 package com.example.quentin.moviesappisen;
 
 import android.app.SearchManager;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,31 +10,34 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
-import com.example.quentin.moviesappisen.TMDB.DemoTMDBAPIRequests;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
-import com.example.quentin.moviesappisen.database.AppDatabase;
-import com.example.quentin.moviesappisen.fragments.MovieFragment;
+import com.example.quentin.moviesappisen.TMDB.TMDBObjects.TVShow;
 import com.example.quentin.moviesappisen.fragments.MoviesFragment;
+import com.example.quentin.moviesappisen.fragments.ShowsFragment;
 import com.example.quentin.moviesappisen.interfaces.MovieListener;
 
+import static com.example.quentin.moviesappisen.SearchMovieActivity.MOVIE_ID;
+import static com.example.quentin.moviesappisen.SearchMovieActivity.SEARCH;
 
-public class SearchActivity extends AppCompatActivity implements MovieListener, SearchView.OnQueryTextListener {
-
-    public final static String MOVIE_ID = "com.example.quentin.moviesappisen.ID";
-    public final static String SEARCH = "com.example.quentin.moviesappisen.SEARCH";
+public class SearchShowActivity extends AppCompatActivity implements MovieListener, SearchView.OnQueryTextListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_search_show);
     }
 
 
     @Override
     public void onViewMovie(Movie movie) {
-        final Intent intent = new Intent(this, MovieActivity.class);
-        intent.putExtra(MOVIE_ID, movie.id);
+
+    }
+
+    @Override
+    public void onViewTVShow(TVShow show) {
+        final Intent intent = new Intent(this, TVShowActivity.class);
+        intent.putExtra(MOVIE_ID, show.id);
 
         startActivity(intent);
     }
@@ -61,7 +63,7 @@ public class SearchActivity extends AppCompatActivity implements MovieListener, 
     @Override
     public boolean onQueryTextSubmit(String s) {
 
-        final MoviesFragment fragment = new MoviesFragment();
+        final ShowsFragment fragment = new ShowsFragment();
         final Bundle bundle = new Bundle();
         bundle.putString(SEARCH, s);
         fragment.setArguments(bundle);

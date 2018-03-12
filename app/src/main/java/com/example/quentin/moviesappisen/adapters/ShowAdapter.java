@@ -6,37 +6,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.example.quentin.moviesappisen.R;
-import com.example.quentin.moviesappisen.TMDB.Configuration;
 import com.example.quentin.moviesappisen.TMDB.TMDBAPIRequests.QueryConfigs;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
+import com.example.quentin.moviesappisen.TMDB.TMDBObjects.TVShow;
 import com.example.quentin.moviesappisen.async.DownloadTMDBImageQuery;
 
 import java.util.ArrayList;
 
 /**
- * Created by Remi on 10/03/2018.
+ * Created by Remi on 12/03/2018.
  */
 
-public class MovieAdapter extends BaseAdapter {
-    private ArrayList<Movie> movies;
+public class ShowAdapter extends BaseAdapter {
+
+    private ArrayList<TVShow> shows;
     private LayoutInflater mInflater;
 
-    public MovieAdapter(ArrayList<Movie> movies, Context context) {
-        this.movies = movies;
+    public ShowAdapter(ArrayList<TVShow> shows, Context context) {
+        this.shows = shows;
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return null != movies ? movies.size() : 0;
+        return null != shows ? shows.size() : 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return null != movies ? movies.get(i) : null;
+        return null != shows ? shows.get(i) : null;
     }
 
     @Override
@@ -57,10 +57,10 @@ public class MovieAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        final Movie movie = (Movie) getItem(i);
+        final TVShow show = (TVShow) getItem(i);
 
-        holder.title.setText(movie.title);
-        holder.year.setText(movie.release_date);
+        holder.title.setText(show.name);
+        holder.year.setText(show.first_air_date);
 
         QueryConfigs configs = new QueryConfigs();
         configs.getBasicConfiguration();
@@ -71,7 +71,7 @@ public class MovieAdapter extends BaseAdapter {
                 holder.poster.setImageBitmap(bitmap);
             }
         });
-        imageQuery.execute(movie.poster_path, "w92");
+        imageQuery.execute(show.poster_path, "w92");
 
         return view;
     }

@@ -20,7 +20,7 @@ import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Collection;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.People;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.TVShow;
-import com.example.quentin.moviesappisen.adapters.MovieAdapter;
+import com.example.quentin.moviesappisen.adapters.ShowAdapter;
 import com.example.quentin.moviesappisen.interfaces.MovieListener;
 
 import java.util.ArrayList;
@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import static com.example.quentin.moviesappisen.SearchMovieActivity.SEARCH;
 
 /**
- * Created by Remi on 10/03/2018.
+ * Created by Remi on 12/03/2018.
  */
 
-public class MoviesFragment extends Fragment implements AbstractRequest.onSearchResultReceived {
+public class ShowsFragment extends Fragment implements AbstractRequest.onSearchResultReceived {
 
     private QuerySearch search;
     private ListView mListView;
@@ -43,8 +43,7 @@ public class MoviesFragment extends Fragment implements AbstractRequest.onSearch
 
         final String query = getArguments().getString(SEARCH);
         search = new QuerySearch(this);
-        search.searchMovies(query, false, null, null,
-                null, null, null);
+        search.searchTVShows(query, null, null, null);
     }
 
     @Nullable
@@ -63,8 +62,8 @@ public class MoviesFragment extends Fragment implements AbstractRequest.onSearch
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(null != mListener){
-                    final Movie movie = (Movie) adapterView.getItemAtPosition(i);
-                    mListener.onViewMovie(movie);
+                    final TVShow show = (TVShow) adapterView.getItemAtPosition(i);
+                    mListener.onViewTVShow(show);
                 }
             }
         });
@@ -82,8 +81,7 @@ public class MoviesFragment extends Fragment implements AbstractRequest.onSearch
 
     @Override
     public void onMovieListReceived(ArrayList<Movie> movies) {
-        final MovieAdapter adapter = new MovieAdapter(movies, getActivity());
-        mListView.setAdapter(adapter);
+
     }
 
     @Override
@@ -93,7 +91,8 @@ public class MoviesFragment extends Fragment implements AbstractRequest.onSearch
 
     @Override
     public void onTVShowListReceived(ArrayList<TVShow> tvShows) {
-
+        final ShowAdapter adapter = new ShowAdapter(tvShows, getActivity());
+        mListView.setAdapter(adapter);
     }
 
     @Override

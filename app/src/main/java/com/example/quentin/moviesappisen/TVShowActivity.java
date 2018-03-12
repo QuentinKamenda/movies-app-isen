@@ -17,7 +17,7 @@ import com.example.quentin.moviesappisen.async.DownloadTMDBImageQuery;
 
 import static com.example.quentin.moviesappisen.SearchMovieActivity.MOVIE_ID;
 
-public class MovieActivity extends AppCompatActivity implements AbstractRequest.onObjectReceived {
+public class TVShowActivity extends AppCompatActivity implements AbstractRequest.onObjectReceived {
 
     private QueryInfos infos;
 
@@ -30,19 +30,24 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
         final int id = getIntent().getIntExtra(MOVIE_ID, 0);
 
         infos = new QueryInfos(this);
-        infos.getMovieDetails(id);
+        infos.getTVShowDetails(id);
     }
 
     @Override
     public void onMovieReceived(Movie movie) {
+
+    }
+
+    @Override
+    public void onTVShowReceived(TVShow tvShow) {
         TextView title = (TextView) findViewById(R.id.title);
-        title.setText(movie.title);
+        title.setText(tvShow.name);
 
         TextView year = (TextView) findViewById(R.id.year);
-        year.setText(movie.release_date);
+        year.setText(tvShow.first_air_date);
 
         TextView overview = (TextView) findViewById(R.id.overview);
-        overview.setText(movie.overview);
+        overview.setText(tvShow.overview);
 
         QueryConfigs configs = new QueryConfigs();
         configs.getBasicConfiguration();
@@ -53,12 +58,7 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
                 ImageView poster = (ImageView) findViewById(R.id.moviePoster);
                 poster.setImageBitmap(bitmap);
             }
-        }).execute(movie.poster_path, "w92");
-    }
-
-    @Override
-    public void onTVShowReceived(TVShow tvShow) {
-
+        }).execute(tvShow.poster_path, "w92");
     }
 
     @Override
