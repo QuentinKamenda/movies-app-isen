@@ -50,23 +50,23 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
         TextView overview = (TextView) findViewById(R.id.overview);
         overview.setText(movie.overview);
 
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
 
-        Bitmap bitmap;
-        ImageView poster = (ImageView) findViewById(R.id.moviePoster);
-        if((bitmap = imageMemoryCache.getBitmapFromMemCache(movie.poster_path)) != null) {
-            poster.setImageBitmap(bitmap);
-        }
-        else
-        {
-            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-                @Override
-                public void processBitmap(Bitmap bitmap) {
-                    ImageView poster = (ImageView) findViewById(R.id.moviePoster);
-                    poster.setImageBitmap(bitmap);
-                }
-            }, imageMemoryCache).execute(movie.poster_path, "w342");
+        if(movie.poster_path != null) {
+            Bitmap bitmap;
+            ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+            if((bitmap = imageMemoryCache.getBitmapFromMemCache(movie.poster_path)) != null) {
+                poster.setImageBitmap(bitmap);
+            }
+            else
+            {
+                new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                    @Override
+                    public void processBitmap(Bitmap bitmap) {
+                        ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+                        poster.setImageBitmap(bitmap);
+                    }
+                }, imageMemoryCache).execute(movie.poster_path, "w342");
+            }
         }
     }
 

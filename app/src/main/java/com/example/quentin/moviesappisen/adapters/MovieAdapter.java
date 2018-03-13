@@ -67,23 +67,23 @@ public class MovieAdapter extends BaseAdapter {
         holder.title.setText(movie.title);
         holder.year.setText(movie.release_date);
 
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
+        if(movie.poster_path != null) {
+            Bitmap bitmap;
+            if((bitmap = imageMemoryCache.getBitmapFromMemCache(movie.poster_path)) != null) {
+                holder.poster.setImageBitmap(bitmap);
+            }
+            else
+            {
+                new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                    @Override
+                    public void processBitmap(Bitmap bitmap) {
+                        if(bitmap != null)
+                            holder.poster.setImageBitmap(bitmap);
+                    }
+                }, imageMemoryCache).execute(movie.poster_path, "w185");
+            }
+        }
 
-        Bitmap bitmap;
-        if((bitmap = imageMemoryCache.getBitmapFromMemCache(movie.poster_path)) != null) {
-            holder.poster.setImageBitmap(bitmap);
-        }
-        else
-        {
-            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-                @Override
-                public void processBitmap(Bitmap bitmap) {
-                    if(bitmap != null)
-                        holder.poster.setImageBitmap(bitmap);
-                }
-            }, imageMemoryCache).execute(movie.poster_path, "w185");
-        }
 
 
         return view;

@@ -55,23 +55,22 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
         TextView overview = (TextView) findViewById(R.id.overview);
         overview.setText(tvShow.overview);
 
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
-
-        Bitmap bitmap;
-        ImageView poster = (ImageView) findViewById(R.id.moviePoster);
-        if((bitmap = imageMemoryCache.getBitmapFromMemCache(tvShow.poster_path)) != null) {
-            poster.setImageBitmap(bitmap);
-        }
-        else
-        {
-            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-                @Override
-                public void processBitmap(Bitmap bitmap) {
-                    ImageView poster = (ImageView) findViewById(R.id.moviePoster);
-                    poster.setImageBitmap(bitmap);
-                }
-            }, imageMemoryCache).execute(tvShow.poster_path, "w500");
+        if(tvShow.poster_path != null) {
+            Bitmap bitmap;
+            ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+            if((bitmap = imageMemoryCache.getBitmapFromMemCache(tvShow.poster_path)) != null) {
+                poster.setImageBitmap(bitmap);
+            }
+            else
+            {
+                new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                    @Override
+                    public void processBitmap(Bitmap bitmap) {
+                        ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+                        poster.setImageBitmap(bitmap);
+                    }
+                }, imageMemoryCache).execute(tvShow.poster_path, "w500");
+            }
         }
 
     }

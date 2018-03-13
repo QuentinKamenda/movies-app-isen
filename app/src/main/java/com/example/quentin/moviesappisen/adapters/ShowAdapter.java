@@ -67,22 +67,21 @@ public class ShowAdapter extends BaseAdapter {
         holder.title.setText(show.name);
         holder.year.setText(show.first_air_date);
 
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
-
-        Bitmap bitmap;
-        if((bitmap = imageMemoryCache.getBitmapFromMemCache(show.poster_path)) != null) {
-            holder.poster.setImageBitmap(bitmap);
-        }
-        else
-        {
-            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-                @Override
-                public void processBitmap(Bitmap bitmap) {
-                    if(bitmap != null)
-                        holder.poster.setImageBitmap(bitmap);
-                }
-            }, imageMemoryCache).execute(show.poster_path, "w185");
+        if(show.poster_path != null) {
+            Bitmap bitmap;
+            if((bitmap = imageMemoryCache.getBitmapFromMemCache(show.poster_path)) != null) {
+                holder.poster.setImageBitmap(bitmap);
+            }
+            else
+            {
+                new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                    @Override
+                    public void processBitmap(Bitmap bitmap) {
+                        if(bitmap != null)
+                            holder.poster.setImageBitmap(bitmap);
+                    }
+                }, imageMemoryCache).execute(show.poster_path, "w185");
+            }
         }
 
 
