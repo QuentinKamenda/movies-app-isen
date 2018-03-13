@@ -5,4 +5,5 @@
     <string name="showTrends">Tendances Séries</string>
     <string name="searchMovie">Rechercher un film</string>
     <string name="searchTv">Rechercher une série</string>
+    <string name="home">Accueil</string>
 </resources>

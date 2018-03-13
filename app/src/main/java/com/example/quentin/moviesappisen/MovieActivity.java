@@ -1,8 +1,11 @@
 package com.example.quentin.moviesappisen;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +34,15 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
 
         infos = new QueryInfos(this);
         infos.getMovieDetails(id);
+
+        Button button = (Button) findViewById(R.id.home);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MovieActivity.this, HomeActivity.class));
+                finish();
+            }
+        });
     }
 
     @Override

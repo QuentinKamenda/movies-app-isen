@@ -25,9 +25,12 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/home"
             android:layout_width="match_parent"
             android:layout_margin="25dp"
             android:textColor="#ECE2D0"
+            android:text="@string/home"
+            android:textAlignment="center"
             android:background="@drawable/cadre_rouge"
             android:layout_height="wrap_content" />
     </LinearLayout>
