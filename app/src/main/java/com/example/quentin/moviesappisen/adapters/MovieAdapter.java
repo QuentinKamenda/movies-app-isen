@@ -68,7 +68,9 @@ public class MovieAdapter extends BaseAdapter {
         DownloadTMDBImageQuery imageQuery = new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
             @Override
             public void processBitmap(Bitmap bitmap) {
-                holder.poster.setImageBitmap(bitmap);
+                if(null != bitmap){
+                    holder.poster.setImageBitmap(bitmap);
+                }
             }
         });
         imageQuery.execute(movie.poster_path, "w175");

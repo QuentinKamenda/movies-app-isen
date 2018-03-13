@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.quentin.moviesappisen.SearchShowActivity"
     android:background="@color/colorBack"
-    android:id="@+id/gifTv"
+    android:id="@+id/container"
     android:orientation="vertical">
 
 
