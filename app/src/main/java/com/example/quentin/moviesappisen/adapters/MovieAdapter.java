@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.quentin.moviesappisen.ImageMemoryCache;
 import com.example.quentin.moviesappisen.R;
 import com.example.quentin.moviesappisen.TMDB.Configuration;
 import com.example.quentin.moviesappisen.TMDB.TMDBAPIRequests.QueryConfigs;
@@ -23,10 +24,14 @@ import java.util.ArrayList;
 public class MovieAdapter extends BaseAdapter {
     private ArrayList<Movie> movies;
     private LayoutInflater mInflater;
+    private ImageMemoryCache imageMemoryCache;
 
     public MovieAdapter(ArrayList<Movie> movies, Context context) {
         this.movies = movies;
         mInflater = LayoutInflater.from(context);
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int cache = maxMemory / 10;
+        imageMemoryCache = new ImageMemoryCache(cache);
     }
 
     @Override
@@ -62,18 +67,24 @@ public class MovieAdapter extends BaseAdapter {
         holder.title.setText(movie.title);
         holder.year.setText(movie.release_date);
 
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
-
-        DownloadTMDBImageQuery imageQuery = new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-            @Override
-            public void processBitmap(Bitmap bitmap) {
-                if(null != bitmap){
-                    holder.poster.setImageBitmap(bitmap);
-                }
+        if(movie.poster_path != null) {
+            Bitmap bitmap;
+            if((bitmap = imageMemoryCache.getBitmapFromMemCache(movie.poster_path)) != null) {
+                holder.poster.setImageBitmap(bitmap);
             }
-        });
-        imageQuery.execute(movie.poster_path, "w175");
+            else
+            {
+                new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                    @Override
+                    public void processBitmap(Bitmap bitmap) {
+                        if(bitmap != null)
+                            holder.poster.setImageBitmap(bitmap);
+                    }
+                }, imageMemoryCache).execute(movie.poster_path, "w185");
+            }
+        }
+
+
 
         return view;
     }

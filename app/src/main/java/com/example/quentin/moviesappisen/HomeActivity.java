@@ -24,6 +24,8 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
 
     private QueryDiscover discover;
 
+    private ImageMemoryCache imageMemoryCache;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +34,17 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
         discover = new QueryDiscover(this);
         discover.getMovieDiscover("popularity.desc", null, null);
         discover.getTVDiscover("popularity.desc", null, null);
+
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int cache = maxMemory / 20;
+        imageMemoryCache = new ImageMemoryCache(cache);
+
+        QueryConfigs conf = new QueryConfigs();
+        conf.getBasicConfiguration();
     }
 
     @Override
     public void onMovieDiscoverReceived(final ArrayList<Movie> movies) {
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
 
         for(int i = 0; i < 3; i++){
             final int id = i;
@@ -60,13 +67,24 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             final ImageView poster = (ImageView) findViewById(getResources().getIdentifier("movieTrendPoster" + (id+1),
                     "id", getPackageName()));
 
-            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-                @Override
-                public void processBitmap(Bitmap bitmap) {
 
+            if(movies.get(i).poster_path != null) {
+                Bitmap bitmap;
+                if((bitmap = imageMemoryCache.getBitmapFromMemCache(movies.get(i).poster_path)) != null) {
                     poster.setImageBitmap(bitmap);
                 }
-            }).execute(movies.get(i).poster_path, "w342");
+                else
+                {
+                    new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                        @Override
+                        public void processBitmap(Bitmap bitmap) {
+
+                            poster.setImageBitmap(bitmap);
+                        }
+                    }, imageMemoryCache).execute(movies.get(i).poster_path, "w342");
+                }
+            }
+
 
             poster.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -104,13 +122,23 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             final ImageView poster = (ImageView) findViewById(getResources().getIdentifier("showTrendPoster" + (id+1),
                     "id", getPackageName()));
 
-            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-                @Override
-                public void processBitmap(Bitmap bitmap) {
-
+            if(tvShows.get(i).poster_path != null) {
+                Bitmap bitmap;
+                if((bitmap = imageMemoryCache.getBitmapFromMemCache(tvShows.get(i).poster_path)) != null) {
                     poster.setImageBitmap(bitmap);
                 }
-            }).execute(tvShows.get(i).poster_path, "w342");
+                else
+                {
+                    new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                        @Override
+                        public void processBitmap(Bitmap bitmap) {
+
+                            poster.setImageBitmap(bitmap);
+                        }
+                    }, imageMemoryCache).execute(tvShows.get(i).poster_path, "w342");
+                }
+            }
+
 
             poster.setOnTouchListener(new View.OnTouchListener() {
                 @Override

@@ -21,6 +21,8 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
 
     private QueryInfos infos;
 
+    private ImageMemoryCache imageMemoryCache;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,10 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
         setContentView(R.layout.activity_movie);
 
         final int id = getIntent().getIntExtra(MOVIE_ID, 0);
+
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int cache = maxMemory / 20;
+        imageMemoryCache = new ImageMemoryCache(cache);
 
         infos = new QueryInfos(this);
         infos.getTVShowDetails(id);
@@ -49,16 +55,24 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
         TextView overview = (TextView) findViewById(R.id.overview);
         overview.setText(tvShow.overview);
 
-        QueryConfigs configs = new QueryConfigs();
-        configs.getBasicConfiguration();
-
-        new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-            @Override
-            public void processBitmap(Bitmap bitmap) {
-                ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+        if(tvShow.poster_path != null) {
+            Bitmap bitmap;
+            ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+            if((bitmap = imageMemoryCache.getBitmapFromMemCache(tvShow.poster_path)) != null) {
                 poster.setImageBitmap(bitmap);
             }
-        }).execute(tvShow.poster_path, "w500");
+            else
+            {
+                new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                    @Override
+                    public void processBitmap(Bitmap bitmap) {
+                        ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+                        poster.setImageBitmap(bitmap);
+                    }
+                }, imageMemoryCache).execute(tvShow.poster_path, "w500");
+            }
+        }
+
     }
 
     @Override
