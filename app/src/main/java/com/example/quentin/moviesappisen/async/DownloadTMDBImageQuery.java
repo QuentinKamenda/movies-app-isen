@@ -84,7 +84,7 @@ public class DownloadTMDBImageQuery extends AsyncTask<String, Void, Bitmap> {
             else
                 return null;
 
-            if(imageUrl.length > 1)
+            if(imageUrl.length > 1 && Configuration.image_sizes.backdrop_sizes != null)
                 if(
                         Configuration.image_sizes.backdrop_sizes.contains(imageUrl[1]) ||
                                 Configuration.image_sizes.logo_sizes.contains(imageUrl[1]) ||
