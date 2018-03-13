@@ -40,15 +40,15 @@ public class SearchShowActivity extends AppCompatActivity implements MovieListen
 
         videoView.setVideoURI(video);
 
-        /*
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+        /* videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
             finish();
             }
-        });
+        }); */
 
-       */
+
         videoView.start();
     }
 
