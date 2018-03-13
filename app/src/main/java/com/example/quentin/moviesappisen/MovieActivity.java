@@ -20,6 +20,7 @@ import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Episode;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Season;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.TVShow;
+import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Video;
 import com.example.quentin.moviesappisen.async.DownloadTMDBImageQuery;
 
 import static com.example.quentin.moviesappisen.SearchMovieActivity.MOVIE_ID;
@@ -85,19 +86,29 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
             }
         }
 
-        String frameVideo = "<html><body>Video from Youtube<br><iframe width=\"420\" height=\"315\"" +
-                " src=\"https://www.youtube.com/embed/"+movie.videos.videos.get(0).key+"\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
-
-        WebView displayYoutubeVideo = (WebView) findViewById(R.id.trailer);
-        displayYoutubeVideo.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
+        if(movie.videos != null) {
+            boolean possessTrailer = false;
+            for(Video video : movie.videos.videos) {
+                if(video.type.equals("Trailer"))
+                    possessTrailer = true;
             }
-        });
-        WebSettings webSettings = displayYoutubeVideo.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        displayYoutubeVideo.loadData(frameVideo, "text/html", "utf-8");
+
+            if(possessTrailer) {
+                String frameVideo = "<html><body>Video from Youtube<br><iframe width=\"420\" height=\"315\"" +
+                        " src=\"https://www.youtube.com/embed/"+movie.videos.videos.get(0).key+"\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+
+                WebView displayYoutubeVideo = (WebView) findViewById(R.id.trailer);
+                displayYoutubeVideo.setWebViewClient(new WebViewClient(){
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        return false;
+                    }
+                });
+                WebSettings webSettings = displayYoutubeVideo.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                displayYoutubeVideo.loadData(frameVideo, "text/html", "utf-8");
+            }
+        }
     }
 
     @Override
