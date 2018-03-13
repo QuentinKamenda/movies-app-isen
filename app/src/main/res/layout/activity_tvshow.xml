@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_margin="20dp"
         android:background="@drawable/cadre_rouge2"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/title"
@@ -61,6 +61,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/colorWhite"/>
+
+        <WebView
+            android:id="@+id/trailer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
