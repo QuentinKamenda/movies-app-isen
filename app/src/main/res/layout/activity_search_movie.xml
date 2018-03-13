@@ -5,7 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.quentin.moviesappisen.SearchMovieActivity"
-    android:id="@+id/container"
+    android:id="@+id/gifmovie"
+    android:background="@color/colorBack"
     android:orientation="vertical">
 
+
+    <TextView
+        android:id="@+id/searchmovie"
+        android:layout_width="match_parent"
+        android:textColor="@color/colorWhite"
+        android:layout_height="wrap_content"
+        android:text="@string/searchMovie" />
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
