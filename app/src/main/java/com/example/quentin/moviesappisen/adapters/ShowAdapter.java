@@ -79,8 +79,8 @@ public class ShowAdapter extends BaseAdapter {
             new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
                 @Override
                 public void processBitmap(Bitmap bitmap) {
-
-                    holder.poster.setImageBitmap(bitmap);
+                    if(bitmap != null)
+                        holder.poster.setImageBitmap(bitmap);
                 }
             }, imageMemoryCache).execute(show.poster_path, "w185");
         }

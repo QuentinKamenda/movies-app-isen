@@ -92,7 +92,7 @@ public class SearchShowActivity extends AppCompatActivity implements MovieListen
         bundle.putString(SEARCH, s);
         fragment.setArguments(bundle);
 
-        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
         return true;
     }

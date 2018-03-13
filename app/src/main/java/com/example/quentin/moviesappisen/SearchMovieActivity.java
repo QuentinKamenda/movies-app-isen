@@ -26,6 +26,7 @@ public class SearchMovieActivity extends AppCompatActivity implements MovieListe
     public final static String SEARCH = "com.example.quentin.moviesappisen.SEARCH";
 
     VideoView videoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class SearchMovieActivity extends AppCompatActivity implements MovieListe
         bundle.putString(SEARCH, s);
         fragment.setArguments(bundle);
 
-        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
         return true;
     }

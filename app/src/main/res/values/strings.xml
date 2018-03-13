@@ -3,6 +3,6 @@
 
     <string name="movieTrends">Tendances Films</string>
     <string name="showTrends">Tendances Séries</string>
-    <string name="searchMovie">Tendances Séries</string>
-    <string name="searchTv">Tendances Séries</string>
+    <string name="searchMovie">Rechercher un film</string>
+    <string name="searchTv">Rechercher une série</string>
 </resources>
