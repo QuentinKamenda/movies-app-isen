@@ -53,17 +53,6 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
                     "id", getPackageName()));
             title.setText(movies.get(id).title);
 
-            title.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final Intent intent = new Intent(HomeActivity.this, MovieActivity.class);
-                    intent.putExtra(MOVIE_ID, movies.get(id).id);
-
-                    startActivity(intent);
-                    return true;
-                }
-            });
-
             final ImageView poster = (ImageView) findViewById(getResources().getIdentifier("movieTrendPoster" + (id+1),
                     "id", getPackageName()));
 
@@ -107,17 +96,6 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             TextView title = (TextView) findViewById(getResources().getIdentifier("showTrendTitle" + (i+1),
                     "id", getPackageName()));
             title.setText(tvShows.get(i).name);
-
-            title.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final Intent intent = new Intent(HomeActivity.this, TVShowActivity.class);
-                    intent.putExtra(MOVIE_ID, tvShows.get(id).id);
-
-                    startActivity(intent);
-                    return true;
-                }
-            });
 
             final ImageView poster = (ImageView) findViewById(getResources().getIdentifier("showTrendPoster" + (id+1),
                     "id", getPackageName()));
