@@ -1,37 +1,70 @@
 package com.example.quentin.moviesappisen.TMDB.TMDBObjects;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.ArrayList;
 
 /**
  * Created by theo on 01/03/2018.
  */
 
+@Entity(tableName = "movies")
 public class Movie {
-    public boolean adult;
-    public String backdrop_path;
-    public Collection belongs_to_collection;
-    public Long budget;
-    public ArrayList<Genre> genres = new ArrayList<Genre>();
-    public String homepage;
+
+    @PrimaryKey
     public final int id;
-    public ArrayList<Country> production_countries = new ArrayList<Country>();
+    @ColumnInfo
     public String imdb_id;
-    public String original_language;
-    public String original_title;
-    public String overview;
-    public float popularity;
-    public String poster_path;
-    public ArrayList<Company> production_companies = new ArrayList<Company>();
-    public String release_date;
-    public Long revenue;
-    public int runtime;
-    public ArrayList<Language> spoken_languages = new ArrayList<Language>();
-    public String status;
-    public String tagline;
+    @ColumnInfo
     public String title;
+    @ColumnInfo
+    public String overview;
+    @ColumnInfo
+    public float popularity;
+    @ColumnInfo
+    public String release_date;
+    @ColumnInfo
     public boolean video;
+    @Ignore
+    public boolean adult;
+    @Ignore
+    public String backdrop_path;
+    @Ignore
+    public Collection belongs_to_collection;
+    @Ignore
+    public Long budget;
+    @Ignore
+    public ArrayList<Genre> genres = new ArrayList<Genre>();
+    @Ignore
+    public String homepage;
+    @Ignore
+    public ArrayList<Country> production_countries = new ArrayList<Country>();
+    @Ignore
+    public String original_language;
+    @Ignore
+    public String original_title;
+    @Ignore
+    public String poster_path;
+    @Ignore
+    public ArrayList<Company> production_companies = new ArrayList<Company>();
+    @Ignore
+    public Long revenue;
+    @Ignore
+    public int runtime;
+    @Ignore
+    public ArrayList<Language> spoken_languages = new ArrayList<Language>();
+    @Ignore
+    public String status;
+    @Ignore
+    public String tagline;
+    @Ignore
     public float vote_average;
+    @Ignore
     public float vote_count;
+    @Ignore
     public Videos videos;
 
 

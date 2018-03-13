@@ -3,7 +3,7 @@ package com.example.quentin.moviesappisen.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.example.quentin.moviesappisen.pojo.Movie;
+import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
 
 /**
  * Created by Remi on 01/03/2018.

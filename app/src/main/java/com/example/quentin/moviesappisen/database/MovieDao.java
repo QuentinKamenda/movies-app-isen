@@ -5,7 +5,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.quentin.moviesappisen.pojo.Movie;
+
+import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
 
 import java.util.List;
 
