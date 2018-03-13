@@ -58,7 +58,7 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
                 ImageView poster = (ImageView) findViewById(R.id.moviePoster);
                 poster.setImageBitmap(bitmap);
             }
-        }).execute(tvShow.poster_path, "w92");
+        }).execute(tvShow.poster_path, "w500");
     }
 
     @Override

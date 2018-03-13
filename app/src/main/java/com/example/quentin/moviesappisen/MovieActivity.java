@@ -53,7 +53,7 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
                 ImageView poster = (ImageView) findViewById(R.id.moviePoster);
                 poster.setImageBitmap(bitmap);
             }
-        }).execute(movie.poster_path, "w92");
+        }).execute(movie.poster_path, "w500");
     }
 
     @Override
