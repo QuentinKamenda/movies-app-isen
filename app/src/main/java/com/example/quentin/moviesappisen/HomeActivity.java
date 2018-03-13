@@ -56,11 +56,14 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             title.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final Intent intent = new Intent(HomeActivity.this, MovieActivity.class);
-                    intent.putExtra(MOVIE_ID, movies.get(id).id);
+                    if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        final Intent intent = new Intent(HomeActivity.this, MovieActivity.class);
+                        intent.putExtra(MOVIE_ID, movies.get(id).id);
 
-                    startActivity(intent);
-                    return true;
+                        startActivity(intent);
+                        return true;
+                    }
+                    return false;
                 }
             });
 
@@ -89,11 +92,14 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             poster.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final Intent intent = new Intent(HomeActivity.this, MovieActivity.class);
-                    intent.putExtra(MOVIE_ID, movies.get(id).id);
+                    if(motionEvent.getAction() == motionEvent.ACTION_DOWN) {
+                        final Intent intent = new Intent(HomeActivity.this, MovieActivity.class);
+                        intent.putExtra(MOVIE_ID, movies.get(id).id);
 
-                    startActivity(intent);
-                    return true;
+                        startActivity(intent);
+                        return true;
+                    }
+                    return false;
                 }
             });
         }
@@ -111,11 +117,14 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             title.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final Intent intent = new Intent(HomeActivity.this, TVShowActivity.class);
-                    intent.putExtra(MOVIE_ID, tvShows.get(id).id);
+                    if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        final Intent intent = new Intent(HomeActivity.this, TVShowActivity.class);
+                        intent.putExtra(MOVIE_ID, tvShows.get(id).id);
 
-                    startActivity(intent);
-                    return true;
+                        startActivity(intent);
+                        return true;
+                    }
+                    return false;
                 }
             });
 
@@ -143,11 +152,14 @@ public class HomeActivity extends AppCompatActivity implements AbstractRequest.o
             poster.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    final Intent intent = new Intent(HomeActivity.this, TVShowActivity.class);
-                    intent.putExtra(MOVIE_ID, tvShows.get(id).id);
+                    if(motionEvent.getAction() == motionEvent.ACTION_DOWN) {
+                        final Intent intent = new Intent(HomeActivity.this, TVShowActivity.class);
+                        intent.putExtra(MOVIE_ID, tvShows.get(id).id);
 
-                    startActivity(intent);
-                    return true;
+                        startActivity(intent);
+                        return true;
+                    }
+                    return false;
                 }
             });
         }
