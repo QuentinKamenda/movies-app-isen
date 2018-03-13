@@ -71,7 +71,7 @@ public class MovieAdapter extends BaseAdapter {
                 holder.poster.setImageBitmap(bitmap);
             }
         });
-        imageQuery.execute(movie.poster_path, "w92");
+        imageQuery.execute(movie.poster_path, "w175");
 
         return view;
     }
