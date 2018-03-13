@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.quentin.moviesappisen.ImageMemoryCache;
 import com.example.quentin.moviesappisen.TMDB.Configuration;
 
 import java.io.IOException;
@@ -26,10 +27,11 @@ public class DownloadTMDBImageQuery extends AsyncTask<String, Void, Bitmap> {
 
     private onImageReceived mListener;
 
+    private final ImageMemoryCache imageMemoryCache;
 
-
-    public DownloadTMDBImageQuery(onImageReceived listener) {
+    public DownloadTMDBImageQuery(onImageReceived listener, ImageMemoryCache imageMemoryCache) {
         mListener = listener;
+        this.imageMemoryCache = imageMemoryCache;
     }
 
     /**
@@ -59,6 +61,11 @@ public class DownloadTMDBImageQuery extends AsyncTask<String, Void, Bitmap> {
             Log.d(this.getClass().getSimpleName(), "response code : " + Integer.toString(responseCode));
             if (responseCode == 200){
                 final Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
+
+                if(imageMemoryCache != null) {
+                    imageMemoryCache.addBitmapToMemoryCache(imageUrl[0], bitmap);
+                }
+
                 return bitmap;
             }
         } catch (IOException e) {

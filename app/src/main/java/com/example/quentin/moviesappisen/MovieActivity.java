@@ -21,6 +21,8 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
 
     private QueryInfos infos;
 
+    private ImageMemoryCache imageMemoryCache;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,10 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
         setContentView(R.layout.activity_movie);
 
         final int id = getIntent().getIntExtra(MOVIE_ID, 0);
+
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int cache = maxMemory / 20;
+        imageMemoryCache = new ImageMemoryCache(cache);
 
         infos = new QueryInfos(this);
         infos.getMovieDetails(id);
@@ -47,13 +53,21 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
         QueryConfigs configs = new QueryConfigs();
         configs.getBasicConfiguration();
 
-        new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-            @Override
-            public void processBitmap(Bitmap bitmap) {
-                ImageView poster = (ImageView) findViewById(R.id.moviePoster);
-                poster.setImageBitmap(bitmap);
-            }
-        }).execute(movie.poster_path, "w500");
+        Bitmap bitmap;
+        ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+        if((bitmap = imageMemoryCache.getBitmapFromMemCache(movie.poster_path)) != null) {
+            poster.setImageBitmap(bitmap);
+        }
+        else
+        {
+            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                @Override
+                public void processBitmap(Bitmap bitmap) {
+                    ImageView poster = (ImageView) findViewById(R.id.moviePoster);
+                    poster.setImageBitmap(bitmap);
+                }
+            }, imageMemoryCache).execute(movie.poster_path, "w342");
+        }
     }
 
     @Override

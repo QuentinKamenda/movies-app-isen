@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.example.quentin.moviesappisen.ImageMemoryCache;
 import com.example.quentin.moviesappisen.R;
 import com.example.quentin.moviesappisen.TMDB.TMDBAPIRequests.QueryConfigs;
 import com.example.quentin.moviesappisen.TMDB.TMDBObjects.Movie;
@@ -23,10 +24,14 @@ public class ShowAdapter extends BaseAdapter {
 
     private ArrayList<TVShow> shows;
     private LayoutInflater mInflater;
+    private ImageMemoryCache imageMemoryCache;
 
     public ShowAdapter(ArrayList<TVShow> shows, Context context) {
         this.shows = shows;
         mInflater = LayoutInflater.from(context);
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int cache = maxMemory / 10;
+        imageMemoryCache = new ImageMemoryCache(cache);
     }
 
     @Override
@@ -65,13 +70,21 @@ public class ShowAdapter extends BaseAdapter {
         QueryConfigs configs = new QueryConfigs();
         configs.getBasicConfiguration();
 
-        DownloadTMDBImageQuery imageQuery = new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
-            @Override
-            public void processBitmap(Bitmap bitmap) {
-                holder.poster.setImageBitmap(bitmap);
-            }
-        });
-        imageQuery.execute(show.poster_path, "w92");
+        Bitmap bitmap;
+        if((bitmap = imageMemoryCache.getBitmapFromMemCache(show.poster_path)) != null) {
+            holder.poster.setImageBitmap(bitmap);
+        }
+        else
+        {
+            new DownloadTMDBImageQuery(new DownloadTMDBImageQuery.onImageReceived() {
+                @Override
+                public void processBitmap(Bitmap bitmap) {
+
+                    holder.poster.setImageBitmap(bitmap);
+                }
+            }, imageMemoryCache).execute(show.poster_path, "w185");
+        }
+
 
         return view;
     }
