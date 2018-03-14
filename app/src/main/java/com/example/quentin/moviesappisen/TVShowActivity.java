@@ -3,6 +3,7 @@ package com.example.quentin.moviesappisen;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -58,6 +59,7 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
 
         TextView overview = (TextView) findViewById(R.id.overview);
         overview.setText(tvShow.overview);
+        overview.setMovementMethod(new ScrollingMovementMethod());
 
         if(tvShow.poster_path != null) {
             Bitmap bitmap;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -66,6 +67,7 @@ public class MovieActivity extends AppCompatActivity implements AbstractRequest.
 
         TextView overview = (TextView) findViewById(R.id.overview);
         overview.setText(movie.overview);
+        overview.setMovementMethod(new ScrollingMovementMethod());
 
 
         if(movie.poster_path != null) {
