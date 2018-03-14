@@ -1,12 +1,15 @@
 package com.example.quentin.moviesappisen;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +35,7 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_movie);
+        setContentView(R.layout.activity_tvshow);
 
         final int id = getIntent().getIntExtra(MOVIE_ID, 0);
 
@@ -42,6 +45,15 @@ public class TVShowActivity extends AppCompatActivity implements AbstractRequest
 
         infos = new QueryInfos(this);
         infos.getTVShowDetails(id);
+
+        Button button = (Button) findViewById(R.id.home);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TVShowActivity.this, HomeActivity.class));
+                finish();
+            }
+        });
     }
 
     @Override
